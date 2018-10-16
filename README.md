@@ -30,17 +30,18 @@ ViewPlugBaseLayout.initFont(this);
 采用链式，已检查没有内存泄露，并且提供多种调用场景。
 这里没有layout，采用纯代码生成界面
 
- new PopWindow.Builder().activity(this)
-                .title("标题啦")
-                .content("好多内存")
-                .confirmClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        LogUtil.tToast(getApplicationContext(),"点击确认");
 
-                    }
-                })
-                .build().popOneButton();
+	 new PopWindow.Builder().activity(this)
+			.title("标题啦")
+			.content("好多内存")
+			.confirmClickListener(new View.OnClickListener() {
+			    @Override
+			    public void onClick(View v) {
+				LogUtil.tToast(getApplicationContext(),"点击确认");
+
+			    }
+			})
+			.build().popOneButton();
 
 
 
