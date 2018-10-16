@@ -1,5 +1,8 @@
 package diff.nathan.com.diffutil;
 
+import android.annotation.SuppressLint;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -25,7 +28,8 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 new PopWindow.Builder().activity(MainActivity.this)
                         .title("标题啦")
-                        .content("好多内存")
+                        .content("登录超时")
+                        .isMustDoClick(true)
                         .confirmClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
@@ -39,28 +43,41 @@ public class MainActivity extends AppCompatActivity {
                                 LogUtil.tToast(getApplicationContext(),"点击退出");
                             }
                         })
-                        .build().popTwoButton();
+                        .build().popOneButton();
             }
         });
-        new PopWindow.Builder().activity(this)
+        onPopWindowListener = new PopWindow.Builder().activity(this)
                 .title("标题啦")
-                .content("好多内存")
+                .content("登录超时")
                 .confirmClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         LogUtil.tToast(getApplicationContext(),"点击确认");
+                        Message message = new Message();
+                        handler.sendMessageDelayed(message,1000);
 
                     }
                 })
-                .cancelClickListener(new View.OnClickListener() {
+                .onDismissListener(new BackgroundDarkPopupWindow.OnDismissListener() {
                     @Override
-                    public void onClick(View v) {
-                        LogUtil.tToast(getApplicationContext(),"点击退出");
+                    public void Ondismiss() {
+                        LogUtil.tToast(getApplicationContext(),"被关闭了");
                     }
                 })
-                .isVertical(true)
-                .build().popTwoButton();
+                .isClickOverDismiss(false)
+                .isMustDoClick(true)
+                .build().popOneButton();
     }
+    private PopWindow.OnPopWindowListener onPopWindowListener;
 
-
+    @SuppressLint("HandlerLeak")
+    Handler handler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+                    if(onPopWindowListener!=null){
+                        onPopWindowListener.onClose();
+                    }
+        }
+    };
 }
