@@ -43,7 +43,7 @@ ViewPlugBaseLayout.initFont(this);
 			})
 			.build().popOneButton();
 
-[![baidu]](http://github.com/125549234/Diffutil/images/webwxgetmsgimg.jpg)  
+![baidu](https://github.com/125549234/DiffUtil/blob/master/images/webwxgetmsgimg.jpg)  
 
 
 
