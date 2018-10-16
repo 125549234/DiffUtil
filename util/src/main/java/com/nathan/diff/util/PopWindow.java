@@ -806,7 +806,7 @@ public class PopWindow {
         private String cancelButtonText;
         private boolean isMustDoClick;
         private Integer showLocationStatus;
-        private boolean isClickOverDismiss;
+        private boolean isClickOverDismiss = true;
         private boolean isVertical;
         private String hintEdittextContent;
         private String edittextContent;
