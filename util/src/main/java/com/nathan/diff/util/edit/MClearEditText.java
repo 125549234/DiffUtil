@@ -136,6 +136,22 @@ public class MClearEditText extends android.support.v7.widget.AppCompatEditText 
         }
     }
 
+    public void setShowBottomLine(boolean showBottomLine) {
+        this.showBottomLine = showBottomLine;
+    }
+
+    public void setDefaultBottomLineColor(int defaultBottomLineColor) {
+        this.defaultBottomLineColor = defaultBottomLineColor;
+    }
+
+    public void setBottomLineWidth(float bottomLineWidth) {
+        this.bottomLineWidth = bottomLineWidth;
+    }
+
+    public void setDisableClean(boolean disableClean) {
+        this.disableClean = disableClean;
+    }
+
     private void setDrawable() {
         //获取EditText的DrawableRight,假如没有设置我们就使用默认的图片:左上右下（0123）
         mClearDrawable = getCompoundDrawables()[DRAWABLE_RIGHT];

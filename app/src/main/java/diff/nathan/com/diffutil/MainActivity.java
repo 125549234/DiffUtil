@@ -1,6 +1,7 @@
 package diff.nathan.com.diffutil;
 
 import android.annotation.SuppressLint;
+import android.graphics.Color;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
@@ -48,25 +49,37 @@ public class MainActivity extends AppCompatActivity {
         });
         onPopWindowListener = new PopWindow.Builder().activity(this)
                 .title("标题啦")
-                .content("登录超时")
+                .content("好多内存")
                 .confirmClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        LogUtil.tToast(getApplicationContext(),"点击确认");
-                        Message message = new Message();
-                        handler.sendMessageDelayed(message,1000);
+                        LogUtil.tToast(getApplicationContext(), "确认:"+onPopWindowListener.getEdittextContent());
 
                     }
                 })
+                .isClickOverDismiss(false)
+                .isMustDoClick(false)
                 .onDismissListener(new BackgroundDarkPopupWindow.OnDismissListener() {
                     @Override
                     public void Ondismiss() {
-                        LogUtil.tToast(getApplicationContext(),"被关闭了");
+                        LogUtil.tToast(getApplicationContext(),"关闭了");
                     }
                 })
-                .isClickOverDismiss(false)
-                .isMustDoClick(true)
-                .build().popOneButton();
+                .cancelClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        LogUtil.tToast(getApplicationContext(),"取消");
+                    }
+                })
+                //.isVertical(true)
+
+                //.inputModelByModel(2)
+                .hintEdittextContent("请输入密码")
+                .setEdittextDisableClear(false)
+                .setEdittextBottomLineColor(Color.parseColor("#410000"))
+                .setEdittextBottomLineWidth(30f)
+                .showEdittextBottomLine(true)
+                .build().popEditTextTwoButton();
     }
     private PopWindow.OnPopWindowListener onPopWindowListener;
 

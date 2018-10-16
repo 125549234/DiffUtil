@@ -97,7 +97,22 @@ public class PopWindow {
      * 监听画面消失事件
      */
     private BackgroundDarkPopupWindow.OnDismissListener onDismissListener;
-
+    /**
+     * 输入框是否显示下划线，默认不显示
+     */
+    private boolean showEdittextBottomLine;
+    /**
+     * 设置下划线的颜色
+     */
+    private Integer setEdittextBottomLineColor;
+    /**
+     * 设置下划线的宽度
+     */
+    private Float setEdittextBottomLineWidth;
+    /**
+     * 设置删除按钮是否显示，默认显示
+     */
+    private Boolean setEdittextDisableClear;
 
 
     public interface OnPopWindowListener {
@@ -235,12 +250,30 @@ public class PopWindow {
         textView2.setLayoutParams(params5);
         return textView2;
     }
+
+
     private EditText createEdittext(){
         //内容
         LinearLayout.LayoutParams params5 = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         //params5.topMargin = fontMargin;
         params5.bottomMargin = fontMargin;
         final MClearEditText textView2 = new MClearEditText(activity);
+        //设置是否有下划线
+        textView2.setShowBottomLine(showEdittextBottomLine);
+
+        //设置下划线的颜色
+        if(setEdittextBottomLineColor!=null){
+            textView2.setDefaultBottomLineColor(setEdittextBottomLineColor);
+        }
+        //设置下划线的宽度
+        if(setEdittextBottomLineWidth!=null){
+            textView2.setBottomLineWidth(setEdittextBottomLineWidth);
+        }
+        //设置删除按钮是否显示
+        if(setEdittextDisableClear!=null){
+            textView2.setDisableClean(setEdittextDisableClear);
+        }
+
         if (!isNullOrEmpty(hintEdittextContent)) {
             textView2.setHint(hintEdittextContent);
             textView2.setHintTextColor(Color.parseColor("#929292"));
@@ -792,6 +825,10 @@ public class PopWindow {
         inputModelByMySelf = builder.inputModelByMySelf;
         inputModelByModel = builder.inputModelByModel;
         onDismissListener = builder.onDismissListener;
+        showEdittextBottomLine = builder.showEdittextBottomLine;
+        setEdittextBottomLineColor = builder.setEdittextBottomLineColor;
+        setEdittextBottomLineWidth = builder.setEdittextBottomLineWidth;
+        setEdittextDisableClear = builder.setEdittextDisableClear;
     }
 
 
@@ -813,6 +850,10 @@ public class PopWindow {
         private Integer inputModelByMySelf;
         private Integer inputModelByModel;
         private BackgroundDarkPopupWindow.OnDismissListener onDismissListener;
+        private boolean showEdittextBottomLine;
+        private Integer setEdittextBottomLineColor;
+        private Float setEdittextBottomLineWidth;
+        private Boolean setEdittextDisableClear;
 
 
         public Builder() {
@@ -902,6 +943,26 @@ public class PopWindow {
 
         public Builder onDismissListener(BackgroundDarkPopupWindow.OnDismissListener val) {
             onDismissListener = val;
+            return this;
+        }
+
+        public Builder showEdittextBottomLine(boolean val) {
+            showEdittextBottomLine = val;
+            return this;
+        }
+
+        public Builder setEdittextBottomLineColor(Integer val) {
+            setEdittextBottomLineColor = val;
+            return this;
+        }
+
+        public Builder setEdittextBottomLineWidth(Float val) {
+            setEdittextBottomLineWidth = val;
+            return this;
+        }
+
+        public Builder setEdittextDisableClear(Boolean val) {
+            setEdittextDisableClear = val;
             return this;
         }
 
