@@ -14,7 +14,7 @@ Add it in your root build.gradle at the end of repositories:
 Step 2. Add the dependency
 
 	dependencies {
-	        implementation 'com.github.125549234:DiffUtil:1.0'
+	        implementation 'com.github.125549234:DiffUtil:1.1'
 	}
 
 初始化
