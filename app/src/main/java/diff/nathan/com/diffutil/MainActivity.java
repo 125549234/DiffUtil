@@ -33,7 +33,13 @@ public class MainActivity extends AppCompatActivity {
 
                             }
                         })
-                        .build().popOneButton();
+                        .cancelClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                LogUtil.tToast(getApplicationContext(),"点击退出");
+                            }
+                        })
+                        .build().popTwoButton();
             }
         });
         new PopWindow.Builder().activity(this)
@@ -46,7 +52,14 @@ public class MainActivity extends AppCompatActivity {
 
                     }
                 })
-                .build().popOneButton();
+                .cancelClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        LogUtil.tToast(getApplicationContext(),"点击退出");
+                    }
+                })
+                .isVertical(true)
+                .build().popTwoButton();
     }
 
 
