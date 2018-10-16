@@ -44,6 +44,36 @@ ViewPlugBaseLayout.initFont(this);
 			.build().popOneButton();
 
 ![666666](https://github.com/125549234/DiffUtil/blob/master/images/webwxgetmsgimg.jpg)  
+这个算是最简单的一个弹出  
+
+这个是有确认和取消的，当然所有的文字都可以编辑，不设置值的话会采用默认值
+
+	 new PopWindow.Builder().activity(this)
+                .title("标题啦")
+                .content("好多内存")
+                .confirmClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        LogUtil.tToast(getApplicationContext(),"点击确认");
+
+                    }
+                })
+                .cancelClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        LogUtil.tToast(getApplicationContext(),"点击退出");
+                    }
+                })
+                .build().popTwoButton();
+		
+		
+还可以设置按钮的方向，.isVertical(true)  
+![666666](https://github.com/125549234/DiffUtil/blob/master/images/webwxgetmsgimg2.jpg)  
+![666666](https://github.com/125549234/DiffUtil/blob/master/images/webwxgetmsgimg3.jpg) 
+![666666](https://github.com/125549234/DiffUtil/blob/master/images/SVID_20181016_111133_1.gif) 
+
+
+
 
 
 
