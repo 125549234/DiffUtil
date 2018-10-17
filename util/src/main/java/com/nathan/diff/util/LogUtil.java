@@ -7,6 +7,7 @@ import android.widget.Toast;
 
 
 import com.nathan.diff.util.dialog.MToast;
+import com.nathan.diff.util.plug.ViewPlugBaseLayout;
 
 import es.dmoral.toasty.Toasty;
 
@@ -19,13 +20,18 @@ import static com.nathan.diff.util.BuildConfig.DEBUG;
 public class LogUtil {
     private static String TAG  = "test111111";
 
+
     public static void tLogD(String temp){
         //if(LOG_DEBUG){
             if(temp!=null){
                 //if(logFlag)
-                if(DEBUG){
-                    Log.e(TAG,""+temp);
+                if(ViewPlugBaseLayout.isDebug!=null){
+                    boolean tem = ViewPlugBaseLayout.isDebug;
+                    if(tem){
+                        Log.e(TAG,""+temp);
+                    }
                 }
+
 
 
 //                SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");

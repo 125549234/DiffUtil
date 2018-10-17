@@ -17,6 +17,19 @@ Step 2. Add the dependency
 	        implementation 'com.github.125549234:DiffUtil:1.1'
 	}
 
+历史版本
+------
+### 1.2
+* 修复一下日志的区分是否debug
+
+### 1.1
+* 更新readme，添加图片解释
+
+
+### 1.0
+* 刚刚放上去
+
+
 初始化
 ------
 ##### 由于有关界面的部分都使用的屏幕适配的关系，需要在打开的第一个activity或者application中初始化一下组件
@@ -28,7 +41,7 @@ ViewPlugBaseLayout.initFont(this);
 ### 优化的popupwindow
 这一部分主要的优化在于，那些什么杂七杂八的什么activity被finish后又不知道被什么地方调用了，或者是说在activity在没有完成前被调用报错，又或者是第一次打开了后跳转到其他界面后又回来调用popupwindow报activity错之类的问题。  
 采用链式，已检查没有内存泄露，并且提供多种调用场景。  
-\n这里没有layout，采用纯代码生成界面  
+这里没有layout，采用纯代码生成界面  
 
 
 	 new PopWindow.Builder().activity(this)

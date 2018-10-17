@@ -1,7 +1,10 @@
 package com.nathan.diff.util.plug;
 
 import android.app.Activity;
+import android.app.Application;
 import android.content.Context;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.BitmapDrawable;
@@ -29,11 +32,13 @@ import android.widget.TextView;
 import com.nathan.diff.util.BackgroundDarkPopupWindow;
 import com.nathan.diff.util.R;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
 import static android.util.TypedValue.COMPLEX_UNIT_PX;
+import static com.nathan.diff.util.LogUtil.tLogD;
 
 /**
  * Created by nathan on 2017/7/26.
@@ -119,11 +124,24 @@ public class ViewPlugBaseLayout {
 
         dpWidth = px2dip(activity, width);
         dpHeight = px2dip(activity, height);
-       
+        syncIsDebug(activity);
 
     }
-    
-    
+
+    public static Boolean isDebug = null;
+    public static void syncIsDebug(Context context) {
+        if (isDebug == null) {
+            try {
+                String packageName = context.getPackageName();
+                Class buildConfig = Class.forName(packageName + ".BuildConfig");
+                Field DEBUG = buildConfig.getField("DEBUG");
+                DEBUG.setAccessible(true);
+                isDebug = DEBUG.getBoolean(null);
+            } catch (Throwable t) {
+                // Do nothing
+            }
+        }
+    }
     
     /**
      * 获取LinearLayout的配置(简化版，MATCH_PARENT，WRAP_CONTENT，不设置高度)

@@ -22,7 +22,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ViewPlugBaseLayout.initFont(this);
-
+        //是否关闭日志输出
+        LogUtil.setIsCloseModel(false);
         textView = findViewById(R.id.textView);
         textView.setOnClickListener(new View.OnClickListener() {
             @Override
