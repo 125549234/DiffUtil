@@ -1,6 +1,8 @@
 # DiffUtil
 工具包，现在功能包括（屏幕适配，带删除的输入框，log和toast优化，优化的popupwindow，分页，优化的对话框）
 
+[![](https://jitpack.io/v/125549234/DiffUtil.svg)](https://jitpack.io/#125549234/DiffUtil)
+
 导入方式
 ------
 Add it in your root build.gradle at the end of repositories:
@@ -328,6 +330,35 @@ ViewPlugBaseLayout.initFont(this);
     
  这样，就会把这个RelativeLayout自动根据里面设置的长宽里外边距等适配屏幕。（等比例的，这个比例值是根据获取的机型屏幕像素来决定，现在不提供修改）
  
+ 
+ 
+ ### 弹出加载框
+ 
+    
+     protected void initProgressDialog(Activity activity){
+            mMProgressDialog = new MProgressDialog.Builder(activity)
+                    //点击外部是否可以取消
+                    .isCanceledOnTouchOutside(false)
+                    //View背景的圆角
+                    .setCornerRadius(20)
+                    .setBackgroundWindowColor(Color.parseColor("#2A736666"))
+                    //View背景的颜色
+                    .setBackgroundViewColor(Color.parseColor("#000000"))
+                    //View 边框的宽度
+                    .setStrokeWidth(2)
+                    //Progress 颜色
+                    .setProgressColor(Color.parseColor("#ffffff"))
+                    //Progress 宽度
+                    .setProgressWidth(3)
+                    //Progress 内圈颜色
+                    .setProgressRimColor(Color.BLACK)
+                    //Progress 内圈宽度
+                    .setProgressRimWidth(4)
+                    //文字的颜色
+                    .setTextColor(Color.parseColor("#ffffff"))
+                    .build();
+        }
+    
 
 
 
