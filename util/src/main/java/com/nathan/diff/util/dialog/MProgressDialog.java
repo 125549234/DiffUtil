@@ -22,6 +22,8 @@ import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import es.dmoral.toasty.Toasty;
+
 
 /**
  * Created by maning on 2017/8/9.
@@ -255,9 +257,20 @@ public class MProgressDialog implements View.OnClickListener {
             }else{
               //  LogUtil.tToast(view.getContext(),"30秒后可解除不可操作状态");
               //  Toast.makeText(view.getContext(),"30秒后可解除不可操作状态",Toast.LENGTH_SHORT).show();
-                Looper.prepare();
-                MToast.makeTextShort(view.getContext(), "30秒后可解除不可操作状态").show();
-                Looper.loop();
+//                Looper.prepare();
+//                MToast.makeTextShort(view.getContext(), "30秒后可解除不可操作状态").show();
+//                Looper.loop();
+
+                if (Looper.myLooper() == null)
+                {
+                    Looper.prepare();
+                    //MToast.makeTextShort(context, str).show();
+                    Toasty.normal(view.getContext(), "30秒后可解除不可操作状态").show();
+                    Looper.loop();
+                }else{
+                    //MToast.makeTextShort(context, str).show();
+                    Toasty.normal(view.getContext(), "30秒后可解除不可操作状态").show();
+                }
             }
         }
     }
