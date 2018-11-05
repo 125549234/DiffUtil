@@ -400,6 +400,18 @@ public class PopWindow {
 
                 }
             });
+        }else{
+            button2.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                        if (popupHandler != null) {
+                            Message message = new Message();
+                            message.what = 1;
+                            popupHandler.sendMessage(message);
+                        }
+
+                }
+            });
         }
         return button2;
     }
