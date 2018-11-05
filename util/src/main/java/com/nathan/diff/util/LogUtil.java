@@ -59,17 +59,7 @@ public class LogUtil {
 
     public static void tToast(Context context, String str){
        // Toast.makeText(context,""+str, Toast.LENGTH_SHORT).show();
-
-        if (Looper.myLooper() == null)
-        {
-            Looper.prepare();
-            //MToast.makeTextShort(context, str).show();
-            Toasty.normal(context, str, Toast.LENGTH_SHORT).show();
-            Looper.loop();
-        }else{
-            //MToast.makeTextShort(context, str).show();
-            Toasty.normal(context, str, Toast.LENGTH_SHORT).show();
-        }
+        tToast(context, str,Toast.LENGTH_LONG);
 //        Looper mLooper = Looper.myLooper();
 //        MToast.makeTextShort(context, str).show();
 //        mLooper.quit();//停止循环，下次执行的时候重新进入Looper消息泵中
@@ -83,6 +73,19 @@ public class LogUtil {
 //            Toast.makeText(context,""+str, Toast.LENGTH_SHORT).show();
 //        }
     }
+    public static void tToast(Context context, String str,int time){
 
+        if (Looper.myLooper() == null)
+        {
+            Looper.prepare();
+            //MToast.makeTextShort(context, str).show();
+            Toasty.normal(context, str, time).show();
+            Looper.loop();
+        }else{
+            //MToast.makeTextShort(context, str).show();
+            Toasty.normal(context, str, time).show();
+        }
+
+    }
 
 }
