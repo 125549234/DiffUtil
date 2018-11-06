@@ -2,6 +2,7 @@ package com.nathan.diff.util;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -11,6 +12,7 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -21,6 +23,9 @@ import com.nathan.diff.util.edit.MClearEditText;
 import com.nathan.diff.util.plug.ViewPlugBaseLayout;
 
 import android.os.Handler;
+
+import java.util.Timer;
+import java.util.TimerTask;
 
 import static android.util.TypedValue.COMPLEX_UNIT_PX;
 
@@ -304,8 +309,12 @@ public class PopWindow {
         textView2.setLayoutParams(params5);
         if(isFocusEdittextFlag){
             textView2.setFocusable(true);
+            textView2.setFocusableInTouchMode(true);
+            textView2.requestFocus();
         }else{
-            textView2.setFocusable(false);
+//            textView2.setFocusable(false);
+//            textView2.setFocusableInTouchMode(false);
+//            textView2.clearFocus();
         }
 
         onGetEdittextContentLister = new OnGetEdittextContentLister() {
@@ -521,7 +530,12 @@ public class PopWindow {
 
         TextView textView2 =createContent();
         LL1.addView(textView2);
-        EditText editText = createEdittext();
+
+        if(isFocusEdittextFlag){
+            LL1.setFocusable(true);
+            LL1.setFocusableInTouchMode(true);
+        }
+      final  EditText editText = createEdittext();
         LL1.addView(editText);
 
         LinearLayout LL2 =createButtonLL();
@@ -547,6 +561,17 @@ public class PopWindow {
         ALLR.addView(ALLRL);
 
         createPopupWindow(ALLR);
+
+        if(isFocusEdittextFlag) {
+            //如果是已经入某个界面就要立刻弹出输入键盘,可能会由于界面未加载完成而无法弹出,需要适当延迟,比如延迟500毫秒:
+            Timer timer = new Timer();
+            timer.schedule(new TimerTask() {
+                public void run() {
+                    InputMethodManager inputManager = (InputMethodManager) editText.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                    inputManager.showSoftInput(editText, 0);
+                }
+            }, 500);
+        }
         return onPopWindowListener;
     }
 

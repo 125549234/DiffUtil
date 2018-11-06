@@ -75,6 +75,7 @@ public class MainActivity extends AppCompatActivity {
                 //.inputModelByModel(2)
                 .hintEdittextContent("请输入密码")
                 .setEdittextDisableClear(false)
+                .setIsFocusEdittextFlag(true)
                 .setEdittextBottomLineColor(Color.parseColor("#410000"))
                 .setEdittextBottomLineWidth(30f)
                 .showEdittextBottomLine(true)
