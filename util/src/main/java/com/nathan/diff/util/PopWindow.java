@@ -115,6 +115,11 @@ public class PopWindow {
     private Boolean setEdittextDisableClear;
 
 
+    /**
+     * 是否直接弹出软键盘（默认为否）
+     */
+    private Boolean isFocusEdittextFlag;
+
     public interface OnPopWindowListener {
         //让窗口关闭
         void onClose();
@@ -297,6 +302,11 @@ public class PopWindow {
         textView2.setTextColor(Color.parseColor("#000000"));
         textView2.setTextSize(COMPLEX_UNIT_PX, ViewPlugBaseLayout.transformDemin(activity, 14));
         textView2.setLayoutParams(params5);
+        if(isFocusEdittextFlag){
+            textView2.setFocusable(true);
+        }else{
+            textView2.setFocusable(false);
+        }
 
         onGetEdittextContentLister = new OnGetEdittextContentLister() {
             @Override
@@ -841,6 +851,7 @@ public class PopWindow {
         setEdittextBottomLineColor = builder.setEdittextBottomLineColor;
         setEdittextBottomLineWidth = builder.setEdittextBottomLineWidth;
         setEdittextDisableClear = builder.setEdittextDisableClear;
+        isFocusEdittextFlag =  builder.isFocusEdittextFlag;
     }
 
 
@@ -866,7 +877,7 @@ public class PopWindow {
         private Integer setEdittextBottomLineColor;
         private Float setEdittextBottomLineWidth;
         private Boolean setEdittextDisableClear;
-
+        private Boolean isFocusEdittextFlag = false;
 
         public Builder() {
         }
@@ -975,6 +986,10 @@ public class PopWindow {
 
         public Builder setEdittextDisableClear(Boolean val) {
             setEdittextDisableClear = val;
+            return this;
+        }
+        public Builder setIsFocusEdittextFlag(Boolean val) {
+            isFocusEdittextFlag = val;
             return this;
         }
 
