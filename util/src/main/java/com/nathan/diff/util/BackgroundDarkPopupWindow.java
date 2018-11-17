@@ -217,6 +217,16 @@ public class BackgroundDarkPopupWindow extends PopupWindow {
         darkLP.height = mAbove - mBelow;
     }
 
+    public interface OnDissLister{
+       void onGoingDiss();
+    }
+
+    private OnDissLister onDissLister;
+
+    public void setOnDissLister(OnDissLister onDissLister) {
+        this.onDissLister = onDissLister;
+    }
+
     @Override
     public void dismiss() {
         if(!isCloseDarkClick){
@@ -227,6 +237,9 @@ public class BackgroundDarkPopupWindow extends PopupWindow {
             mWindowManager.removeViewImmediate(mDarkView);
             mIsDarkInvoked = false;
             dissLister.Ondismiss();
+        }
+        if(onDissLister!=null){
+            onDissLister.onGoingDiss();
         }
     }
 
@@ -239,6 +252,9 @@ public class BackgroundDarkPopupWindow extends PopupWindow {
             mWindowManager.removeViewImmediate(mDarkView);
             mIsDarkInvoked = false;
             dissLister.Ondismiss();
+        }
+        if(onDissLister!=null){
+            onDissLister.onGoingDiss();
         }
     }
 

@@ -9,6 +9,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Message;
 import android.text.InputType;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -125,6 +126,15 @@ public class PopWindow {
      */
     private Boolean isFocusEdittextFlag;
 
+
+    /**
+     * 填充到对话框中间的view
+     */
+    private View contentView;
+
+
+    private Integer RLayoutId;
+
     public interface OnPopWindowListener {
         //让窗口关闭
         void onClose();
@@ -141,27 +151,52 @@ public class PopWindow {
                 Message message = new Message();
                 message.what = 1;
                 popupHandler.sendMessage(message);
+
             }
+
+
         }
 
         @Override
         public String getEdittextContent() {
 
-            if(onGetEdittextContentLister!=null){
+            if (onGetEdittextContentLister != null) {
                 return onGetEdittextContentLister.getContext();
             }
             return null;
         }
     };
 
+    /**
+     * 用于关闭自定义的view
+     */
+    public interface OnPopWindowCloseViewListener {
+        //让窗口关闭
+        void onClose();
+    }
+
+    private OnPopWindowCloseViewListener onPopWindowCloseViewListener;
+
     private OnGetEdittextContentLister onGetEdittextContentLister;
 
-    private interface OnGetEdittextContentLister{
+    private interface OnGetEdittextContentLister {
         String getContext();
     }
 
 
-    private RelativeLayout createBackgroudRL(){
+    private BackgroundDarkPopupWindow.OnDissLister onDissLister = new BackgroundDarkPopupWindow.OnDissLister() {
+        @Override
+        public void onGoingDiss() {
+            if (popupHandler != null) {
+                Message message = new Message();
+                message.what = 1;
+                popupHandler.sendMessage(message);
+            }
+        }
+    };
+
+
+    private RelativeLayout createBackgroudRL() {
         RelativeLayout.LayoutParams param = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         param.addRule(RelativeLayout.CENTER_IN_PARENT);
         RelativeLayout ALLR = new RelativeLayout(activity);
@@ -181,9 +216,10 @@ public class PopWindow {
         }
         return ALLR;
     }
-    private RelativeLayout createBackgroudRL2(){
+
+    private RelativeLayout createBackgroudRL2() {
         RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        params.width =  ViewPlugBaseLayout.dip2px(activity, ViewPlugBaseLayout.getDPPercentW(80));
+        params.width = ViewPlugBaseLayout.dip2px(activity, ViewPlugBaseLayout.getDPPercentW(80));
         params.addRule(RelativeLayout.CENTER_IN_PARENT);
         RelativeLayout ALLRL = new RelativeLayout(activity);
         ALLRL.setLayoutParams(params);
@@ -197,7 +233,7 @@ public class PopWindow {
         return ALLRL;
     }
 
-    private LinearLayout createBackgroundLL3(){
+    private LinearLayout createBackgroundLL3() {
         LinearLayout.LayoutParams params2 = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         //params.height = (int) ViewPlugBaseLayout.transformDemin(context, height);
 
@@ -213,7 +249,7 @@ public class PopWindow {
         return LL1;
     }
 
-    private TextView createTitle(){
+    private TextView createTitle() {
         //标题
         LinearLayout.LayoutParams params4 = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         params4.gravity = Gravity.CENTER;
@@ -233,7 +269,7 @@ public class PopWindow {
     }
 
 
-    private View createLine(){
+    private View createLine() {
         //分割线
         LinearLayout.LayoutParams params3 = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         params3.height = ViewPlugBaseLayout.dip2px(activity, 1);
@@ -244,7 +280,7 @@ public class PopWindow {
     }
 
 
-    private TextView createContent(){
+    private TextView createContent() {
         //内容
         LinearLayout.LayoutParams params5 = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         params5.topMargin = fontMargin;
@@ -262,7 +298,7 @@ public class PopWindow {
     }
 
 
-    private EditText createEdittext(){
+    private EditText createEdittext() {
         //内容
         LinearLayout.LayoutParams params5 = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         //params5.topMargin = fontMargin;
@@ -272,15 +308,15 @@ public class PopWindow {
         textView2.setShowBottomLine(showEdittextBottomLine);
 
         //设置下划线的颜色
-        if(setEdittextBottomLineColor!=null){
+        if (setEdittextBottomLineColor != null) {
             textView2.setDefaultBottomLineColor(setEdittextBottomLineColor);
         }
         //设置下划线的宽度
-        if(setEdittextBottomLineWidth!=null){
+        if (setEdittextBottomLineWidth != null) {
             textView2.setBottomLineWidth(setEdittextBottomLineWidth);
         }
         //设置删除按钮是否显示
-        if(setEdittextDisableClear!=null){
+        if (setEdittextDisableClear != null) {
             textView2.setDisableClean(setEdittextDisableClear);
         }
 
@@ -291,15 +327,15 @@ public class PopWindow {
         if (!isNullOrEmpty(edittextContent)) {
             textView2.setText(edittextContent);
         }
-        if(inputModelByMySelf!=null){
+        if (inputModelByMySelf != null) {
             textView2.setInputType(inputModelByMySelf);
-        }else{
-            if(inputModelByModel!=null){
+        } else {
+            if (inputModelByModel != null) {
                 //密码状态
-                if(inputModelByModel==1){
+                if (inputModelByModel == 1) {
                     textView2.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
-                }else if(inputModelByModel==2){
-                    textView2.setInputType(InputType.TYPE_CLASS_NUMBER |InputType.TYPE_NUMBER_VARIATION_PASSWORD);
+                } else if (inputModelByModel == 2) {
+                    textView2.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_VARIATION_PASSWORD);
                 }
             }
         }
@@ -307,11 +343,11 @@ public class PopWindow {
         textView2.setTextColor(Color.parseColor("#000000"));
         textView2.setTextSize(COMPLEX_UNIT_PX, ViewPlugBaseLayout.transformDemin(activity, 14));
         textView2.setLayoutParams(params5);
-        if(isFocusEdittextFlag){
+        if (isFocusEdittextFlag) {
             textView2.setFocusable(true);
             textView2.setFocusableInTouchMode(true);
             textView2.requestFocus();
-        }else{
+        } else {
 //            textView2.setFocusable(false);
 //            textView2.setFocusableInTouchMode(false);
 //            textView2.clearFocus();
@@ -320,28 +356,28 @@ public class PopWindow {
         onGetEdittextContentLister = new OnGetEdittextContentLister() {
             @Override
             public String getContext() {
-              return textView2.getText().toString();
+                return textView2.getText().toString();
             }
         };
 
         return textView2;
     }
 
-    private LinearLayout createButtonLL(){
+    private LinearLayout createButtonLL() {
         //按钮行
         LinearLayout.LayoutParams params6 = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         //params.height = (int) ViewPlugBaseLayout.transformDemin(context, height);
         LinearLayout LL2 = new LinearLayout(activity);
-        if(isVertical){
+        if (isVertical) {
             LL2.setOrientation(LinearLayout.VERTICAL);
-        }else{
+        } else {
             LL2.setOrientation(LinearLayout.HORIZONTAL);
         }
         LL2.setLayoutParams(params6);
         return LL2;
     }
 
-    private Button createConfirmButton(){
+    private Button createConfirmButton() {
         //确认按钮
         LinearLayout.LayoutParams params7 = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         //params7.setMargins(10,0,0,0);
@@ -379,15 +415,15 @@ public class PopWindow {
         return button;
     }
 
-    private Button createCancelButton(){
+    private Button createCancelButton() {
         //取消按钮
         LinearLayout.LayoutParams params8 = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         //params7.setMargins(10,0,0,0);
         params8.weight = 1;
 
-        if(isVertical){
+        if (isVertical) {
             params8.topMargin = margin;
-        }else{
+        } else {
             params8.rightMargin = margin;
         }
 
@@ -419,15 +455,15 @@ public class PopWindow {
 
                 }
             });
-        }else{
+        } else {
             button2.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                        if (popupHandler != null) {
-                            Message message = new Message();
-                            message.what = 1;
-                            popupHandler.sendMessage(message);
-                        }
+                    if (popupHandler != null) {
+                        Message message = new Message();
+                        message.what = 1;
+                        popupHandler.sendMessage(message);
+                    }
 
                 }
             });
@@ -435,7 +471,7 @@ public class PopWindow {
         return button2;
     }
 
-    private void createPopupWindow(View view){
+    private void createPopupWindow(View view) {
         popupWindow = ViewPlugBaseLayout.makeBackgroundPopwindow(activity, view, null);
         popupWindow.setBackgroundDrawable(new ColorDrawable(0));
         popupWindow.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
@@ -447,8 +483,6 @@ public class PopWindow {
         }
 
 
-
-
         //开始显示
         if (popupHandler != null) {
             Message message = new Message();
@@ -456,16 +490,18 @@ public class PopWindow {
             popupHandler.sendMessage(message);
         }
 
+        popupWindow.setOnDissLister(onDissLister);
+
     }
 
-    int width ;
-    int margin ;
-    int fontMargin ;
+    int width;
+    int margin;
+    int fontMargin;
 
-    private void initParams(){
-         width = ViewPlugBaseLayout.dip2px(activity, ViewPlugBaseLayout.getDPPercentW(80));
-         margin = ViewPlugBaseLayout.dip2px(activity, 12);
-         fontMargin = ViewPlugBaseLayout.dip2px(activity, 8);
+    private void initParams() {
+        width = ViewPlugBaseLayout.dip2px(activity, ViewPlugBaseLayout.getDPPercentW(80));
+        margin = ViewPlugBaseLayout.dip2px(activity, 12);
+        fontMargin = ViewPlugBaseLayout.dip2px(activity, 8);
     }
 
     /**
@@ -477,7 +513,7 @@ public class PopWindow {
         }
         initParams();
         RelativeLayout ALLR = createBackgroudRL();
-        RelativeLayout ALLRL =createBackgroudRL2();
+        RelativeLayout ALLRL = createBackgroudRL2();
         LinearLayout LL1 = createBackgroundLL3();
 
         TextView textView1 = createTitle();
@@ -488,13 +524,70 @@ public class PopWindow {
         LL1.addView(backgroundLine);
 
 
-        TextView textView2 =createContent();
+        TextView textView2 = createContent();
         LL1.addView(textView2);
 
 
-        LinearLayout LL2 =createButtonLL();
+        LinearLayout LL2 = createButtonLL();
 
-        Button button =createConfirmButton();
+        Button button = createConfirmButton();
+        LL2.addView(button);
+
+
+        LL1.addView(LL2);
+        ALLRL.addView(LL1);
+        ALLR.addView(ALLRL);
+
+
+        createPopupWindow(ALLR);
+        return onPopWindowListener;
+    }
+
+
+    /**
+     * 加载一个view有1个按钮
+     */
+    public OnPopWindowListener popViewOneButton() {
+        if (activity.isFinishing()) {
+            return null;
+        }
+        initParams();
+        RelativeLayout ALLR = createBackgroudRL();
+        RelativeLayout ALLRL = createBackgroudRL2();
+        final LinearLayout LL1 = createBackgroundLL3();
+
+        if (!isNullOrEmpty(title)) {
+            TextView textView1 = createTitle();
+            LL1.addView(textView1);
+
+            View backgroundLine = createLine();
+            LL1.addView(backgroundLine);
+        }
+
+
+        if (contentView != null) {
+            LL1.addView(contentView);
+            onPopWindowCloseViewListener = new OnPopWindowCloseViewListener() {
+                @Override
+                public void onClose() {
+                    if (contentView == null) {
+                        return;
+                    }
+                    LL1.removeView(contentView);
+                }
+            };
+        }
+
+
+        if (RLayoutId != null) {
+            contentView = LayoutInflater.from(activity).inflate(RLayoutId, null);
+            LL1.addView(contentView);
+        }
+
+
+        LinearLayout LL2 = createButtonLL();
+
+        Button button = createConfirmButton();
         LL2.addView(button);
 
 
@@ -517,7 +610,7 @@ public class PopWindow {
 
         initParams();
         RelativeLayout ALLR = createBackgroudRL();
-        RelativeLayout ALLRL =createBackgroudRL2();
+        RelativeLayout ALLRL = createBackgroudRL2();
         LinearLayout LL1 = createBackgroundLL3();
 
         TextView textView1 = createTitle();
@@ -528,31 +621,28 @@ public class PopWindow {
         LL1.addView(backgroundLine);
 
 
-        TextView textView2 =createContent();
+        TextView textView2 = createContent();
         LL1.addView(textView2);
 
-        if(isFocusEdittextFlag){
+        if (isFocusEdittextFlag) {
             LL1.setFocusable(true);
             LL1.setFocusableInTouchMode(true);
         }
-      final  EditText editText = createEdittext();
+        final EditText editText = createEdittext();
         LL1.addView(editText);
 
-        LinearLayout LL2 =createButtonLL();
+        LinearLayout LL2 = createButtonLL();
         Button button2 = createCancelButton();
-        Button button =createConfirmButton();
+        Button button = createConfirmButton();
 
-        if(isVertical){
+        if (isVertical) {
             LL2.addView(button);
             LL2.addView(button2);
 
-        }else{
+        } else {
             LL2.addView(button2);
             LL2.addView(button);
         }
-
-
-
 
 
         LL1.addView(LL2);
@@ -562,7 +652,7 @@ public class PopWindow {
 
         createPopupWindow(ALLR);
 
-        if(isFocusEdittextFlag) {
+        if (isFocusEdittextFlag) {
             //如果是已经入某个界面就要立刻弹出输入键盘,可能会由于界面未加载完成而无法弹出,需要适当延迟,比如延迟500毫秒:
             Timer timer = new Timer();
             timer.schedule(new TimerTask() {
@@ -667,7 +757,7 @@ public class PopWindow {
 
         initParams();
         RelativeLayout ALLR = createBackgroudRL();
-        RelativeLayout ALLRL =createBackgroudRL2();
+        RelativeLayout ALLRL = createBackgroudRL2();
         LinearLayout LL1 = createBackgroundLL3();
 
         TextView textView1 = createTitle();
@@ -678,14 +768,13 @@ public class PopWindow {
         LL1.addView(backgroundLine);
 
 
-        TextView textView2 =createContent();
+        TextView textView2 = createContent();
         LL1.addView(textView2);
 
 
-        LinearLayout LL2 =createButtonLL();
+        LinearLayout LL2 = createButtonLL();
 
         Button button2 = createCancelButton();
-
 
 
 //        //确认按钮
@@ -753,19 +842,16 @@ public class PopWindow {
 //            message.what = 0;
 //            popupHandler.sendMessage(message);
 //        }
-        Button button =createConfirmButton();
+        Button button = createConfirmButton();
 
-        if(isVertical){
+        if (isVertical) {
             LL2.addView(button);
             LL2.addView(button2);
 
-        }else{
+        } else {
             LL2.addView(button2);
             LL2.addView(button);
         }
-
-
-
 
 
         LL1.addView(LL2);
@@ -776,8 +862,6 @@ public class PopWindow {
         createPopupWindow(ALLR);
         return onPopWindowListener;
     }
-
-
 
 
     private void showPopupProgress() {
@@ -831,7 +915,15 @@ public class PopWindow {
                             popupWindow = null;
                         }
                     }
-
+                    if (onPopWindowCloseViewListener != null) {
+                        onPopWindowCloseViewListener.onClose();
+                    }
+                    activity = null;
+                    // contentView = null;
+                    onDismissListener = null;
+                    popupWindow = null;
+                    confirmClickListener = null;
+                    cancelClickListener = null;
                     //}
                     break;
             }
@@ -876,7 +968,9 @@ public class PopWindow {
         setEdittextBottomLineColor = builder.setEdittextBottomLineColor;
         setEdittextBottomLineWidth = builder.setEdittextBottomLineWidth;
         setEdittextDisableClear = builder.setEdittextDisableClear;
-        isFocusEdittextFlag =  builder.isFocusEdittextFlag;
+        isFocusEdittextFlag = builder.isFocusEdittextFlag;
+        contentView = builder.contentView;
+        RLayoutId = builder.RLayoutId;
     }
 
 
@@ -903,6 +997,8 @@ public class PopWindow {
         private Float setEdittextBottomLineWidth;
         private Boolean setEdittextDisableClear;
         private Boolean isFocusEdittextFlag = false;
+        private View contentView;
+        private Integer RLayoutId;
 
         public Builder() {
         }
@@ -1013,8 +1109,19 @@ public class PopWindow {
             setEdittextDisableClear = val;
             return this;
         }
+
         public Builder setIsFocusEdittextFlag(Boolean val) {
             isFocusEdittextFlag = val;
+            return this;
+        }
+
+        public Builder setContentView(View val) {
+            contentView = val;
+            return this;
+        }
+
+        public Builder setRLayoutId(Integer val) {
+            RLayoutId = val;
             return this;
         }
 

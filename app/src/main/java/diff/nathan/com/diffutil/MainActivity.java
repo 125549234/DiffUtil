@@ -6,6 +6,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
 
@@ -17,19 +18,22 @@ import com.nathan.diff.util.plug.ViewPlugBaseLayout;
 public class MainActivity extends AppCompatActivity {
 
     private TextView textView;
+    private View testView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ViewPlugBaseLayout.initFont(this);
         textView = findViewById(R.id.textView);
+        testView = LayoutInflater.from(this).inflate(R.layout.activity_test_view,null);
         textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 new PopWindow.Builder().activity(MainActivity.this)
-                        .title("标题啦")
-                        .content("登录超时")
-                        .isMustDoClick(true)
+                        //.title("标题啦")
+                        .isMustDoClick(false)
+                        .setContentView(testView)
+                        //.setRLayoutId(R.layout.activity_test_view)
                         .confirmClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
@@ -43,43 +47,10 @@ public class MainActivity extends AppCompatActivity {
                                 LogUtil.tToast(getApplicationContext(),"点击退出");
                             }
                         })
-                        .build().popOneButton();
+                        .build().popViewOneButton();
             }
         });
-        onPopWindowListener = new PopWindow.Builder().activity(this)
-                .title("标题啦")
-                .content("好多内存")
-                .confirmClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        LogUtil.tToast(getApplicationContext(), "确认:"+onPopWindowListener.getEdittextContent());
 
-                    }
-                })
-                .isClickOverDismiss(false)
-                .isMustDoClick(false)
-                .onDismissListener(new BackgroundDarkPopupWindow.OnDismissListener() {
-                    @Override
-                    public void Ondismiss() {
-                        LogUtil.tToast(getApplicationContext(),"关闭了");
-                    }
-                })
-                .cancelClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        LogUtil.tToast(getApplicationContext(),"取消");
-                    }
-                })
-                //.isVertical(true)
-
-                //.inputModelByModel(2)
-                .hintEdittextContent("请输入密码")
-                .setEdittextDisableClear(false)
-                .setIsFocusEdittextFlag(true)
-                .setEdittextBottomLineColor(Color.parseColor("#410000"))
-                .setEdittextBottomLineWidth(30f)
-                .showEdittextBottomLine(true)
-                .build().popEditTextTwoButton();
     }
     private PopWindow.OnPopWindowListener onPopWindowListener;
 
