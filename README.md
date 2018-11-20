@@ -21,6 +21,9 @@ Step 2. Add the dependency
 
 历史版本
 ------
+### 1.8
+* 增加自定义View
+
 ### 1.7
 * 优化键盘弹出
 
@@ -374,10 +377,81 @@ ViewPlugBaseLayout.initFont(this);
     
 
 
+ ### 添加自定义View
+
+        private TextView textView;
+         private View testView;
+         private Button button;
+         private TextView text;
+         @Override
+         protected void onCreate(Bundle savedInstanceState) {
+             super.onCreate(savedInstanceState);
+             setContentView(R.layout.activity_main);
+             ViewPlugBaseLayout.initFont(this);
+             textView = findViewById(R.id.textView);
+             testView = LayoutInflater.from(this).inflate(R.layout.activity_test_view,null);
+             text = testView.findViewById(R.id.text);
+             button = testView.findViewById(R.id.button);
+             button.setOnClickListener(new View.OnClickListener() {
+                 @Override
+                 public void onClick(View view) {
+                     text.setText(":2222222222222");
+                 }
+             });
+             textView.setOnClickListener(new View.OnClickListener() {
+                 @Override
+                 public void onClick(View v) {
+                     new PopWindow.Builder().activity(MainActivity.this)
+                             //.title("标题啦")
+                             .isMustDoClick(false)
+                             .setContentView(testView)
+                             //.setRLayoutId(R.layout.activity_test_view)
+                             .confirmClickListener(new View.OnClickListener() {
+                                 @Override
+                                 public void onClick(View v) {
+                                     LogUtil.tToast(getApplicationContext(),"点击确认");
+
+                                 }
+                             })
+                             .cancelClickListener(new View.OnClickListener() {
+                                 @Override
+                                 public void onClick(View v) {
+                                     LogUtil.tToast(getApplicationContext(),"点击退出");
+                                 }
+                             })
+                             .build().popViewOneButton();
+                 }
+             });
+
+         }
+
+
+    但要注意，layout的格式，小bug（到时候会修复的），在你的layout再加上一层布局就好了，跟你最外层一样就可以
 
 
 
+         <RelativeLayout
+             xmlns:android="http://schemas.android.com/apk/res/android"
+             android:layout_width="300dp"
+             android:layout_height="300dp">
+             <RelativeLayout
+                 android:layout_width="300dp"
+                 android:layout_height="300dp">
+                 <Button
+                     android:id="@+id/button"
+                     android:layout_width="300dp"
+                     android:layout_height="50dp"
+                     android:text="111111"/>
 
+                 <TextView
+                     android:id="@+id/text"
+                     android:layout_width="300dp"
+                     android:layout_height="50dp"
+                     android:text="666666666666"
+                     android:layout_alignParentBottom="true"/>
+             </RelativeLayout>
+
+         </RelativeLayout>
 
 
 	
@@ -385,7 +459,6 @@ ViewPlugBaseLayout.initFont(this);
 	
 	
 	
-开饭。。。
 
 
 
