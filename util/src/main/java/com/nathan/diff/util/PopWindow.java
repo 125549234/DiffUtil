@@ -599,7 +599,60 @@ public class PopWindow {
         createPopupWindow(ALLR);
         return onPopWindowListener;
     }
+    /**
+     * 加载一个view
+     */
+    public OnPopWindowListener popViewNoButton() {
+        if (activity.isFinishing()) {
+            return null;
+        }
+        initParams();
+        RelativeLayout ALLR = createBackgroudRL();
+        RelativeLayout ALLRL = createBackgroudRL2();
+        final LinearLayout LL1 = createBackgroundLL3();
 
+        if (!isNullOrEmpty(title)) {
+            TextView textView1 = createTitle();
+            LL1.addView(textView1);
+
+            View backgroundLine = createLine();
+            LL1.addView(backgroundLine);
+        }
+
+
+        if (contentView != null) {
+            LL1.addView(contentView);
+            onPopWindowCloseViewListener = new OnPopWindowCloseViewListener() {
+                @Override
+                public void onClose() {
+                    if (contentView == null) {
+                        return;
+                    }
+                    LL1.removeView(contentView);
+                }
+            };
+        }
+
+
+        if (RLayoutId != null) {
+            contentView = LayoutInflater.from(activity).inflate(RLayoutId, null);
+            LL1.addView(contentView);
+        }
+
+
+        LinearLayout LL2 = createButtonLL();
+
+
+
+
+        LL1.addView(LL2);
+        ALLRL.addView(LL1);
+        ALLR.addView(ALLRL);
+
+
+        createPopupWindow(ALLR);
+        return onPopWindowListener;
+    }
     /**
      * 有2个按钮,1个输入框
      */
