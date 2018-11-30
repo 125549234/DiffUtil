@@ -184,7 +184,7 @@ public class MProgressDialog implements View.OnClickListener {
 
     // 定时触发事件
     private void timeTrigger() {
-
+        removeStatus = false;
         Date date = new Date(); // 第一次执行任务的时间
 
 
@@ -201,7 +201,8 @@ public class MProgressDialog implements View.OnClickListener {
                 //tLogD("定时任务:"+i);
                 if(i==3){
                     //tLogD("关闭:"+i);
-                    setCancelTouchOutside(true);
+                    //setCancelTouchOutside(true);
+                    removeStatus = true;
                     stopTimer();
                 }
                 i++;
@@ -247,6 +248,10 @@ public class MProgressDialog implements View.OnClickListener {
         return (int) (dpValue * scale + 0.5f);
     }
 
+    /**
+     * 解除30秒锁定状态
+     */
+    private boolean removeStatus = true;
 
     @Override
     public void onClick(View view) {
@@ -255,12 +260,10 @@ public class MProgressDialog implements View.OnClickListener {
             if (mBuilder.canceledOnTouchOutside) {
                 dismiss();
             }else{
-              //  LogUtil.tToast(view.getContext(),"30秒后可解除不可操作状态");
-              //  Toast.makeText(view.getContext(),"30秒后可解除不可操作状态",Toast.LENGTH_SHORT).show();
-//                Looper.prepare();
-//                MToast.makeTextShort(view.getContext(), "30秒后可解除不可操作状态").show();
-//                Looper.loop();
-
+                if(removeStatus){
+                    dismiss();
+                    return;
+                }
                 if (Looper.myLooper() == null)
                 {
                     Looper.prepare();
