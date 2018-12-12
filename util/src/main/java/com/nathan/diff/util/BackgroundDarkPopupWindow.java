@@ -40,7 +40,7 @@ public class BackgroundDarkPopupWindow extends PopupWindow {
             mWindowManager = (WindowManager) contentView.getContext().getSystemService(Context.WINDOW_SERVICE);
             mDarkView = new View(contentView.getContext());
             mDarkView.setLayoutParams(new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT));
-            mDarkView.setBackgroundColor(Color.parseColor("#a0000000"));
+            mDarkView.setBackgroundColor(Color.parseColor("#5e000000"));
             DisplayMetrics dm = new DisplayMetrics();
             mWindowManager.getDefaultDisplay().getMetrics(dm);
             mScreenWidth = dm.widthPixels;
