@@ -15,6 +15,7 @@ import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -1963,12 +1964,14 @@ public class ViewPlugBaseLayout {
 
 
         mPopupWindow.setDarkStyle(-1);
-        mPopupWindow.setDarkColor(Color.parseColor("#5e000000"));
+        mPopupWindow.setDarkColor(Color.parseColor("#000000"));
         mPopupWindow.resetDarkPosition();
         //控制在什么地方弹出
         if (dropV != null) {
             mPopupWindow.darkBelow(dropV);
             mPopupWindow.showAsDropDown(dropV, dropV.getRight() / 2, 0);
+            //  mPopupWindow.showAtLocation(dropV, Gravity.CENTER_HORIZONTAL, 0, dropV.getTop());
+            // mPopupWindow.showAsDropDown(dropV);
         }
         mPopupWindow.setBackgroundDrawable(new ColorDrawable(0));
 

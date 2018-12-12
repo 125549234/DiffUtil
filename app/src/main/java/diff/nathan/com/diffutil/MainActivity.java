@@ -8,8 +8,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.nathan.diff.util.BackgroundDarkPopupWindow;
 import com.nathan.diff.util.LogUtil;
@@ -43,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
                 new PopWindow.Builder().activity(MainActivity.this)
                         //.title("标题啦")
                         .isMustDoClick(false)
-                        .setContentView(testView)
+                        //.setContentView(testView)
                         //.setRLayoutId(R.layout.activity_test_view)
                         .confirmClickListener(new View.OnClickListener() {
                             @Override
@@ -59,6 +61,16 @@ public class MainActivity extends AppCompatActivity {
                             }
                         })
                         .build().popViewOneButton();
+            }
+        });
+
+        testView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                int  mWidth = testView.getWidth();
+                int measuredHeight = testView.getMeasuredHeight();
+                int  mHeight = testView.getHeight();
+                Toast.makeText(getApplicationContext()," "+mWidth+" "+mHeight+" "+measuredHeight,Toast.LENGTH_LONG).show();
             }
         });
 

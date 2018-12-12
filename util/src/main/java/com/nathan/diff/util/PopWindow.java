@@ -12,6 +12,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
@@ -24,6 +25,7 @@ import com.nathan.diff.util.edit.MClearEditText;
 import com.nathan.diff.util.plug.ViewPlugBaseLayout;
 
 import android.os.Handler;
+import android.widget.Toast;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -197,7 +199,7 @@ public class PopWindow {
 
 
     private RelativeLayout createBackgroudRL() {
-        RelativeLayout.LayoutParams param = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        RelativeLayout.LayoutParams param = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         param.addRule(RelativeLayout.CENTER_IN_PARENT);
         RelativeLayout ALLR = new RelativeLayout(activity);
         ALLR.setLayoutParams(param);
@@ -216,7 +218,27 @@ public class PopWindow {
         }
         return ALLR;
     }
-
+    private RelativeLayout createBackgroudRL22() {
+        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT);
+        params.width = ViewPlugBaseLayout.dip2px(activity, ViewPlugBaseLayout.getDPPercentW(80));
+        params.addRule(RelativeLayout.CENTER_IN_PARENT);
+        RelativeLayout ALLRL = new RelativeLayout(activity);
+        ALLRL.setLayoutParams(params);
+        if (!isMustDoClick) {
+            //点击最外层
+            ALLRL.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (popupHandler != null) {
+                        Message message = new Message();
+                        message.what = 1;
+                        popupHandler.sendMessage(message);
+                    }
+                }
+            });
+        }
+        return ALLRL;
+    }
     private RelativeLayout createBackgroudRL2() {
         RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         params.width = ViewPlugBaseLayout.dip2px(activity, ViewPlugBaseLayout.getDPPercentW(80));
@@ -366,7 +388,7 @@ public class PopWindow {
     private LinearLayout createButtonLL() {
         //按钮行
         LinearLayout.LayoutParams params6 = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        //params.height = (int) ViewPlugBaseLayout.transformDemin(context, height);
+      //  params6.height = ViewPlugBaseLayout.dip2px(activity, 60);
         LinearLayout LL2 = new LinearLayout(activity);
         if (isVertical) {
             LL2.setOrientation(LinearLayout.VERTICAL);
@@ -513,6 +535,7 @@ public class PopWindow {
         }
         initParams();
         RelativeLayout ALLR = createBackgroudRL();
+        RelativeLayout ALLRL2 = createBackgroudRL22();
         RelativeLayout ALLRL = createBackgroudRL2();
         LinearLayout LL1 = createBackgroundLL3();
 
@@ -536,7 +559,8 @@ public class PopWindow {
 
         LL1.addView(LL2);
         ALLRL.addView(LL1);
-        ALLR.addView(ALLRL);
+        ALLRL2.addView(ALLRL);
+        ALLR.addView(ALLRL2);
 
 
         createPopupWindow(ALLR);
@@ -552,8 +576,10 @@ public class PopWindow {
             return null;
         }
         initParams();
-        RelativeLayout ALLR = createBackgroudRL();
+       final RelativeLayout ALLR = createBackgroudRL();
+        RelativeLayout ALLRL2 = createBackgroudRL22();
         RelativeLayout ALLRL = createBackgroudRL2();
+
         final LinearLayout LL1 = createBackgroundLL3();
 
         if (!isNullOrEmpty(title)) {
@@ -593,10 +619,22 @@ public class PopWindow {
 
         LL1.addView(LL2);
         ALLRL.addView(LL1);
-        ALLR.addView(ALLRL);
+        ALLRL2.addView(ALLRL);
+        ALLR.addView(ALLRL2);
+
 
 
         createPopupWindow(ALLR);
+        ALLR.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+               int  mWidth = ALLR.getWidth();
+                int measuredHeight = ALLR.getMeasuredHeight();
+                int  mHeight = ALLR.getHeight();
+                Toast.makeText(activity," "+mWidth+" "+mHeight+" "+measuredHeight,Toast.LENGTH_LONG).show();
+            }
+        });
+
         return onPopWindowListener;
     }
     /**
@@ -608,6 +646,7 @@ public class PopWindow {
         }
         initParams();
         RelativeLayout ALLR = createBackgroudRL();
+        RelativeLayout ALLRL2 = createBackgroudRL22();
         RelativeLayout ALLRL = createBackgroudRL2();
         final LinearLayout LL1 = createBackgroundLL3();
 
@@ -647,7 +686,8 @@ public class PopWindow {
 
         LL1.addView(LL2);
         ALLRL.addView(LL1);
-        ALLR.addView(ALLRL);
+        ALLRL2.addView(ALLRL);
+        ALLR.addView(ALLRL2);
 
 
         createPopupWindow(ALLR);
@@ -663,6 +703,7 @@ public class PopWindow {
 
         initParams();
         RelativeLayout ALLR = createBackgroudRL();
+        RelativeLayout ALLRL2 = createBackgroudRL22();
         RelativeLayout ALLRL = createBackgroudRL2();
         LinearLayout LL1 = createBackgroundLL3();
 
@@ -700,8 +741,8 @@ public class PopWindow {
 
         LL1.addView(LL2);
         ALLRL.addView(LL1);
-
-        ALLR.addView(ALLRL);
+        ALLRL2.addView(ALLRL);
+        ALLR.addView(ALLRL2);
 
         createPopupWindow(ALLR);
 
@@ -810,6 +851,7 @@ public class PopWindow {
 
         initParams();
         RelativeLayout ALLR = createBackgroudRL();
+        RelativeLayout ALLRL2 = createBackgroudRL22();
         RelativeLayout ALLRL = createBackgroudRL2();
         LinearLayout LL1 = createBackgroundLL3();
 
@@ -909,8 +951,8 @@ public class PopWindow {
 
         LL1.addView(LL2);
         ALLRL.addView(LL1);
-
-        ALLR.addView(ALLRL);
+        ALLRL2.addView(ALLRL);
+        ALLR.addView(ALLRL2);
 
         createPopupWindow(ALLR);
         return onPopWindowListener;
