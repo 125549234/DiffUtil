@@ -64,15 +64,15 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        testView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-            @Override
-            public void onGlobalLayout() {
-                int  mWidth = testView.getWidth();
-                int measuredHeight = testView.getMeasuredHeight();
-                int  mHeight = testView.getHeight();
-                Toast.makeText(getApplicationContext()," "+mWidth+" "+mHeight+" "+measuredHeight,Toast.LENGTH_LONG).show();
-            }
-        });
+//        testView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+//            @Override
+//            public void onGlobalLayout() {
+//                int  mWidth = testView.getWidth();
+//                int measuredHeight = testView.getMeasuredHeight();
+//                int  mHeight = testView.getHeight();
+//                Toast.makeText(getApplicationContext()," "+mWidth+" "+mHeight+" "+measuredHeight,Toast.LENGTH_LONG).show();
+//            }
+//        });
 
     }
     private PopWindow.OnPopWindowListener onPopWindowListener;

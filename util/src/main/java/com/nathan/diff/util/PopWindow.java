@@ -244,6 +244,7 @@ public class PopWindow {
         params.width = ViewPlugBaseLayout.dip2px(activity, ViewPlugBaseLayout.getDPPercentW(80));
         params.addRule(RelativeLayout.CENTER_IN_PARENT);
         RelativeLayout ALLRL = new RelativeLayout(activity);
+        //ALLRL.setBackgroundColor(Color.parseColor("#00f5f5f5"));
         ALLRL.setLayoutParams(params);
         ALLRL.setBackgroundResource(R.drawable.mn_rectangle_while_background);
         ALLRL.setOnClickListener(new View.OnClickListener() {
@@ -625,15 +626,15 @@ public class PopWindow {
 
 
         createPopupWindow(ALLR);
-        ALLR.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-            @Override
-            public void onGlobalLayout() {
-               int  mWidth = ALLR.getWidth();
-                int measuredHeight = ALLR.getMeasuredHeight();
-                int  mHeight = ALLR.getHeight();
-                Toast.makeText(activity," "+mWidth+" "+mHeight+" "+measuredHeight,Toast.LENGTH_LONG).show();
-            }
-        });
+//        ALLR.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+//            @Override
+//            public void onGlobalLayout() {
+//               int  mWidth = ALLR.getWidth();
+//                int measuredHeight = ALLR.getMeasuredHeight();
+//                int  mHeight = ALLR.getHeight();
+//                Toast.makeText(activity," "+mWidth+" "+mHeight+" "+measuredHeight,Toast.LENGTH_LONG).show();
+//            }
+//        });
 
         return onPopWindowListener;
     }

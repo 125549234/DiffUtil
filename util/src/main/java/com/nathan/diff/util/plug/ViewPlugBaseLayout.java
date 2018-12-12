@@ -1964,7 +1964,7 @@ public class ViewPlugBaseLayout {
 
 
         mPopupWindow.setDarkStyle(-1);
-        mPopupWindow.setDarkColor(Color.parseColor("#000000"));
+        mPopupWindow.setDarkColor(Color.parseColor("#5e000000"));
         mPopupWindow.resetDarkPosition();
         //控制在什么地方弹出
         if (dropV != null) {
