@@ -20,7 +20,10 @@ Step 2. Add the dependency
 	}
 
 历史版本
-------
+----
+### 1.14
+* 对应androidstudio更新3.3更改api
+
 ### 1.12
 * 恢复背景颜色
 

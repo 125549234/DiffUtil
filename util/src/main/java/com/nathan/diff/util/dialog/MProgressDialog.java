@@ -220,9 +220,11 @@ public class MProgressDialog implements View.OnClickListener {
         //取消超时计时
         if(this.timer != null) {
             this.timer.cancel();
-            this.timer.purge();
-            this.timer = null;
         }
+        if(this.timer != null) {
+            this.timer.purge();
+        }
+        this.timer = null;
     }
 
 
