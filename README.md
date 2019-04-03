@@ -21,6 +21,10 @@ Step 2. Add the dependency
 
 历史版本
 ----
+### 1.15
+* 增加安全的addview方式
+
+
 ### 1.14
 * 对应androidstudio更新3.3更改api
 

@@ -541,27 +541,26 @@ public class PopWindow {
         LinearLayout LL1 = createBackgroundLL3();
 
         TextView textView1 = createTitle();
-        LL1.addView(textView1);
+        safeAddView(LL1,textView1);
 
 
         View backgroundLine = createLine();
-        LL1.addView(backgroundLine);
-
+        safeAddView(LL1,backgroundLine);
 
         TextView textView2 = createContent();
-        LL1.addView(textView2);
-
+        safeAddView(LL1,textView2);
 
         LinearLayout LL2 = createButtonLL();
 
         Button button = createConfirmButton();
-        LL2.addView(button);
+        safeAddView(LL2,button);
 
 
-        LL1.addView(LL2);
-        ALLRL.addView(LL1);
-        ALLRL2.addView(ALLRL);
-        ALLR.addView(ALLRL2);
+
+        safeAddView(LL1,LL2);
+        safeAddView(ALLRL,LL1);
+        safeAddView(ALLRL2,ALLRL);
+        safeAddView(ALLR,ALLRL2);
 
 
         createPopupWindow(ALLR);
@@ -585,15 +584,15 @@ public class PopWindow {
 
         if (!isNullOrEmpty(title)) {
             TextView textView1 = createTitle();
-            LL1.addView(textView1);
-
+            safeAddView(LL1,textView1);
             View backgroundLine = createLine();
-            LL1.addView(backgroundLine);
+            safeAddView(LL1,backgroundLine);
         }
 
 
         if (contentView != null) {
-            LL1.addView(contentView);
+           // LL1.addView(contentView);
+            safeAddView(LL1,contentView);
             onPopWindowCloseViewListener = new OnPopWindowCloseViewListener() {
                 @Override
                 public void onClose() {
@@ -608,20 +607,23 @@ public class PopWindow {
 
         if (RLayoutId != null) {
             contentView = LayoutInflater.from(activity).inflate(RLayoutId, null);
-            LL1.addView(contentView);
+          //  LL1.addView(contentView);
+            safeAddView(LL1,contentView);
         }
 
 
         LinearLayout LL2 = createButtonLL();
 
         Button button = createConfirmButton();
-        LL2.addView(button);
+
+        safeAddView(LL2,button);
 
 
-        LL1.addView(LL2);
-        ALLRL.addView(LL1);
-        ALLRL2.addView(ALLRL);
-        ALLR.addView(ALLRL2);
+        safeAddView(LL1,LL2);
+        safeAddView(ALLRL,LL1);
+        safeAddView(ALLRL2,ALLRL);
+        safeAddView(ALLR,ALLRL2);
+
 
 
 
@@ -653,15 +655,15 @@ public class PopWindow {
 
         if (!isNullOrEmpty(title)) {
             TextView textView1 = createTitle();
-            LL1.addView(textView1);
+            safeAddView(LL1,textView1);
 
             View backgroundLine = createLine();
-            LL1.addView(backgroundLine);
+            safeAddView(LL1,backgroundLine);
         }
 
 
         if (contentView != null) {
-            LL1.addView(contentView);
+            safeAddView(LL1,contentView);
             onPopWindowCloseViewListener = new OnPopWindowCloseViewListener() {
                 @Override
                 public void onClose() {
@@ -676,19 +678,19 @@ public class PopWindow {
 
         if (RLayoutId != null) {
             contentView = LayoutInflater.from(activity).inflate(RLayoutId, null);
-            LL1.addView(contentView);
+            safeAddView(LL1,contentView);
         }
 
 
         LinearLayout LL2 = createButtonLL();
 
 
+        safeAddView(LL1,LL2);
+        safeAddView(ALLRL,LL1);
+        safeAddView(ALLRL2,ALLRL);
+        safeAddView(ALLR,ALLRL2);
 
 
-        LL1.addView(LL2);
-        ALLRL.addView(LL1);
-        ALLRL2.addView(ALLRL);
-        ALLR.addView(ALLRL2);
 
 
         createPopupWindow(ALLR);
@@ -709,41 +711,40 @@ public class PopWindow {
         LinearLayout LL1 = createBackgroundLL3();
 
         TextView textView1 = createTitle();
-        LL1.addView(textView1);
+        safeAddView(LL1,textView1);
 
 
         View backgroundLine = createLine();
-        LL1.addView(backgroundLine);
+        safeAddView(LL1,backgroundLine);
 
 
         TextView textView2 = createContent();
-        LL1.addView(textView2);
+        safeAddView(LL1,textView2);
 
         if (isFocusEdittextFlag) {
             LL1.setFocusable(true);
             LL1.setFocusableInTouchMode(true);
         }
         final EditText editText = createEdittext();
-        LL1.addView(editText);
+        safeAddView(LL1,editText);
 
         LinearLayout LL2 = createButtonLL();
         Button button2 = createCancelButton();
         Button button = createConfirmButton();
 
         if (isVertical) {
-            LL2.addView(button);
-            LL2.addView(button2);
+            safeAddView(LL2,button);
+            safeAddView(LL2,button2);
 
         } else {
-            LL2.addView(button2);
-            LL2.addView(button);
+            safeAddView(LL2,button2);
+            safeAddView(LL2,button);
         }
 
-
-        LL1.addView(LL2);
-        ALLRL.addView(LL1);
-        ALLRL2.addView(ALLRL);
-        ALLR.addView(ALLRL2);
+        safeAddView(LL1,LL2);
+        safeAddView(ALLRL,LL1);
+        safeAddView(ALLRL2,ALLRL);
+        safeAddView(ALLR,ALLRL2);
 
         createPopupWindow(ALLR);
 
@@ -774,16 +775,14 @@ public class PopWindow {
         LinearLayout LL1 = createBackgroundLL3();
 
         TextView textView1 = createTitle();
-        LL1.addView(textView1);
+        safeAddView(LL1,textView1);
 
 
         View backgroundLine = createLine();
-        LL1.addView(backgroundLine);
-
+        safeAddView(LL1,backgroundLine);
 
         TextView textView2 = createContent();
-        LL1.addView(textView2);
-
+        safeAddView(LL1,textView2);
 
         LinearLayout LL2 = createButtonLL();
 
@@ -791,24 +790,31 @@ public class PopWindow {
         Button button = createConfirmButton();
 
         if (isVertical) {
-            LL2.addView(button);
-            LL2.addView(button2);
+            safeAddView(LL2,button);
+            safeAddView(LL2,button2);
 
         } else {
-            LL2.addView(button2);
-            LL2.addView(button);
+            safeAddView(LL2,button2);
+            safeAddView(LL2,button);
         }
 
 
-        LL1.addView(LL2);
-        ALLRL.addView(LL1);
-        ALLRL2.addView(ALLRL);
-        ALLR.addView(ALLRL2);
+        safeAddView(LL1,LL2);
+        safeAddView(ALLRL,LL1);
+        safeAddView(ALLRL2,ALLRL);
+        safeAddView(ALLR,ALLRL2);
+
 
         createPopupWindow(ALLR);
         return onPopWindowListener;
     }
 
+    private void safeAddView(ViewGroup father,View item){
+
+
+        father.removeView(item);
+        father.addView(item);
+    }
 
     private void showPopupProgress() {
         new Handler().post(new Runnable() {
