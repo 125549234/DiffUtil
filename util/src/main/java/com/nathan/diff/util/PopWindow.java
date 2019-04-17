@@ -129,10 +129,6 @@ public class PopWindow {
     private Boolean isFocusEdittextFlag;
 
     /**
-     * 是否点击自带确认按钮后自动关闭弹窗
-     */
-    private Boolean isClickButtonDissmissFlag;
-    /**
      * 填充到对话框中间的view
      */
     private View contentView;
@@ -422,25 +418,20 @@ public class PopWindow {
         button.setLayoutParams(params7);
         button.setGravity(Gravity.CENTER);
         if (confirmClickListener != null) {
-            if(isClickButtonDissmissFlag!=null){
-                if(isClickButtonDissmissFlag){
-                    button.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            confirmClickListener.onClick(v);
-                            if (isClickOverDismiss) {
-                                if (popupHandler != null) {
-                                    Message message = new Message();
-                                    message.what = 1;
-                                    popupHandler.sendMessage(message);
-                                }
-                            }
-
+            button.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    confirmClickListener.onClick(v);
+                    if (isClickOverDismiss) {
+                        if (popupHandler != null) {
+                            Message message = new Message();
+                            message.what = 1;
+                            popupHandler.sendMessage(message);
                         }
-                    });
-                }
-            }
+                    }
 
+                }
+            });
         }
 
         return button;
@@ -472,7 +463,6 @@ public class PopWindow {
         button2.setLayoutParams(params8);
         button2.setGravity(Gravity.CENTER);
         if (cancelClickListener != null) {
-
             button2.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -932,7 +922,6 @@ public class PopWindow {
         isFocusEdittextFlag = builder.isFocusEdittextFlag;
         contentView = builder.contentView;
         RLayoutId = builder.RLayoutId;
-        isClickButtonDissmissFlag = builder.isClickButtonDissmissFlag;
     }
 
 
@@ -961,7 +950,7 @@ public class PopWindow {
         private Boolean isFocusEdittextFlag = false;
         private View contentView;
         private Integer RLayoutId;
-        private Boolean isClickButtonDissmissFlag;
+
         public Builder() {
         }
 
@@ -974,10 +963,7 @@ public class PopWindow {
             popupWindow = val;
             return this;
         }
-        public Builder isClickButtonDissmissFlag(Boolean val) {
-            isClickButtonDissmissFlag = val;
-            return this;
-        }
+
         public Builder confirmClickListener(View.OnClickListener val) {
             confirmClickListener = val;
             return this;
